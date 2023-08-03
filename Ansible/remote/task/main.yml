@@ -1,0 +1,13 @@
+---
+- name: Copy files from localhost's temp_dir to dev_env
+  copy:
+    remote_src: false
+    src: "{{ hostvars['localhost']['temp_dir'] }}/nginx-15.1.2.tgz"
+    dest: "/home/pankaj/test"
+
+- name: List All Files
+  command: "ls /home/pankaj/test"
+  register: files
+
+- debug:
+    var: files.stdout

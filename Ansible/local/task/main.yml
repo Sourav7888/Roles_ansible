@@ -1,0 +1,18 @@
+---
+- name: create temp folder on Localhost VM
+  tempfile:
+    state: directory
+  register: ansible_tmp_path
+
+- set_fact:
+    temp_dir: "{{ ansible_tmp_path.path }}"
+  when: ansible_tmp_path is defined
+
+- debug:
+    var: temp_dir
+  when: ansible_tmp_path is defined
+
+- name: Download file from URL
+  get_url:
+    url: "https://charts.bitnami.com/bitnami/nginx-15.1.2.tgz"
+    dest: "{{ temp_dir }}"
