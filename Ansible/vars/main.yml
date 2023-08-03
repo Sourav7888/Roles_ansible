@@ -1,2 +1,3 @@
 ---
-temp_dir: "{{ ansible_tmp_path.path }}"
+- set_fact:
+    temp_dir: "{{ ansible_tmp_path.path }}"
