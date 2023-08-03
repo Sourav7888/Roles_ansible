@@ -4,12 +4,12 @@
   connection: local
   gather_facts: true
   roles:
-    - Ansible/local/task
-    - Ansible/vars
+    - Ansible/local/task/main.yml
+    - Ansible/vars/main.yml
 - name: Execute copy_files_to_dev_env role
   hosts: dev_env
   become: yes
   gather_facts: true
   roles:
-    - Ansible/remote/task
-    - Ansible/vars
+    - Ansible/remote/task/main.yml
+    - Ansible/vars/main.yml
