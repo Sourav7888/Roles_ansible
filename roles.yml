@@ -1,0 +1,15 @@
+---
+- name: Execute create_temp_folder role
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  roles:
+    - local
+    - vars
+- name: Execute copy_files_to_dev_env role
+  hosts: dev_env
+  become: yes
+  gather_facts: true
+  roles:
+    - remote
+    - vars
