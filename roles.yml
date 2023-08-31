@@ -32,4 +32,4 @@
         mode: '0755'
 
     - name: Execute create.sh
-      command: "/home/tomcat/test/create.sh"
+      command: sh /home/tomcat/test/create.sh
