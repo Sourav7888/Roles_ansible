@@ -1,2 +1,2 @@
 #!/bin/bash
-mkdir gitsadasd
+mkdir testingg
