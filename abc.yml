@@ -1,1 +1,34 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: create temp folder on Localhost VM
+      tempfile:
+        state: directory
+      register: ansible_tmp_path
 
+    - set_fact:
+        temp_dir: "{{ ansible_tmp_path.path }}"
+      when: ansible_tmp_path is defined
+
+    - debug:
+        var: temp_dir
+      when: ansible_tmp_path is defined
+    
+    - name: Clone Git Repository
+      git:
+        repo: https://github.com/Sourav7888/Roles_ansible.git
+        dest: "{{ temp_dir }}"
+
+- hosts: all
+  become: yes
+  gather_facts: true
+  tasks:
+    - name: Copy files from localhost's temp_dir 
+      copy:
+        remote_src: false         
+        src: "{{ hostvars['localhost']['temp_dir'] }}/create.sh" 
+        dest: "/home/tomcat/test"
+     
+    
