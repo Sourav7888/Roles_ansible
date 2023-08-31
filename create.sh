@@ -1,2 +1,3 @@
 #!/bin/bash
-mkdir testingg
+cd /home/tomcat/testingg
+mkdir abc
