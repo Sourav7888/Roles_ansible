@@ -1,17 +1,35 @@
----
-- name: Execute create_temp_folder role
-  hosts: localhost
+- hosts: localhost
   connection: local
   gather_facts: true
-  roles:
-          - local
-          - vars
+  tasks:
+    - name: create temp folder on Localhost VM
+      tempfile:
+        state: directory
+      register: ansible_tmp_path
 
+    - set_fact:
+        temp_dir: "{{ ansible_tmp_path.path }}"
+      when: ansible_tmp_path is defined
 
-- name: Execute copy_files_to_dev_env role
-  hosts: dev_env
+    - name: Clone Git Repository
+      git:
+        repo: https://github.com/Sourav7888/Roles_ansible.git
+        dest: "{{ temp_dir }}"
+
+- hosts: all
   become: yes
   gather_facts: true
-  roles:
-   - remote
-   - vars
+  tasks:
+    - name: Copy files from localhost's temp_dir 
+      copy:
+        remote_src: false         
+        src: "{{ hostvars['localhost']['temp_dir'] }}/create.sh" 
+        dest: "/home/tomcat/test"
+
+    - name: Make create.sh executable
+      file:
+        path: "/home/tomcat/test/create.sh"
+        mode: '0755'
+
+    - name: Execute create.sh
+      command: "/home/tomcat/test/create.sh"
