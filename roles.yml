@@ -32,4 +32,4 @@
         mode: '0755'
 
     - name: Execute create.sh
-      command: sh /home/tomcat/test/create.sh
+      ansible.builtin.script: /home/tomcat/test/create.sh
