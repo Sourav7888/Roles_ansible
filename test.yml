@@ -1,6 +1,6 @@
 ---
 - name: Install Nginx
-  hosts: your_target_server
+  hosts: all
   become: yes  
 
   tasks:
